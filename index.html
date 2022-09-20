@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <style>
+        body {
+            margin: 2em 4em;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+        }
+
+        form {
+            margin: 2em 0;
+        }
+
+        fieldset {
+            border: 1px solid #777;
+            padding: 1em 2em;
+            border-radius: 0.2em;
+        }
+
+        legend {
+            font-size: 150%;
+            font-weight: bold;
+            padding: 0 .5em;
+        }
+
+        input {
+            width: 100%;
+            height: 4.4em;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>加解密</h1>
+
+        <p>使用不可见的零宽度字符隐藏清晰可见的文本。这是数字隐写术变得简单。灵感来自 Zach Aysan</p>
+
+        <p>先输入公共消息，然后输入私人消息，然后单击按钮以在公共消息中隐藏您的私人消息。如果您收到了公开消息，也可以在此处显示该私人消息。</p>
+
+
+        <div
+            style="display: grid; grid-auto-rows: 1fr; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); grid-gap: 2em;">
+
+
+            <fieldset>
+                <legend>隐藏信息</legend>
+                <div class="group">
+                    <label for="public">Public message</label>
+                    <input id="pub" placeholder="请输入公开信息" />
+                </div>
+                <div class="group">
+                    <label for="private" i>Private message</label>
+                    <input id="pri" placeholder="请输入要隐藏的信息" />
+                </div>
+                <p><button onclick="hideClick()"><i class="fas fa-pencil-alt"></i>
+                        糅合</button></p>
+            </fieldset>
+
+
+            <fieldset>
+
+                <legend>解密信息</legend>
+                <div class="group">
+                    <label for="encoded">Public message</label>
+                    <input id="inf" placeholder="请输入带分离信息" />
+                </div>
+                <p><button onclick="extractClick()"><i class="fas fa-eye"></i> 分离</button></p>
+            </fieldset>
+
+        </div>
+    </div>
+    <script type="module">
+        import init, { messagebox, unwrap, wrap } from './pkg/zero_width_rs.js';
+
+        init().then(() => {
+        });
+        hideClick = function hideClick() {
+            var pub = document.getElementById("pub").value;
+            var pri = document.getElementById("pri").value;
+            console.log("hide");
+            alert(wrap(pub, pri));
+        }
+        extractClick = function extractClick() {
+            var inf = document.getElementById("inf").value;
+            alert(unwrap(inf));
+        }
+    </script>
+    <script>
+        function hideClick() { }
+        function extractClick() { }
+    </script>
+</body>
+
+</html>
